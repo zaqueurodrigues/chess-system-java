@@ -1,7 +1,5 @@
 package xadrez.pecas;
 
-import javax.swing.text.Position;
-
 import jogo.Posicao;
 import jogo.Tabuleiro;
 import xadrez.Cor;
