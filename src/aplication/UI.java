@@ -1,7 +1,11 @@
 package aplication;
 
+
+import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import xadrez.Cor;
 import xadrez.PartidaXadrez;
@@ -49,8 +53,24 @@ public class UI {
 		}
 	}
 	
-	public static void mostrarPartida(PartidaXadrez partida) {
+	public static void mostrarPecasCapturadas(List<PecaXadrez> capturadas) {
+		List<PecaXadrez> branca = capturadas.stream().filter(x -> x.getCor() == Cor.BRANCO).collect(Collectors.toList());
+	    List<PecaXadrez> preta = capturadas.stream().filter(x -> x.getCor() == Cor.PRETO).collect(Collectors.toList());
+	    System.out.println("Pecas Capturadas:");
+	    System.out.print("Branca:");
+	    System.out.print(ANSI_WHITE);
+	    System.out.print(Arrays.toString(branca.toArray()));
+	    System.out.println(ANSI_RESET);
+	    System.out.print("Preta :");
+	    System.out.print(ANSI_YELLOW);
+	    System.out.print(Arrays.toString(preta.toArray()));
+	    System.out.println(ANSI_RESET);	
+	
+	}
+	public static void mostrarPartida(PartidaXadrez partida, List<PecaXadrez> capturadas) {
 		mostrarTabuleiro(partida.getPecas());
+		System.out.println();
+		mostrarPecasCapturadas(capturadas);
 		System.out.println();
 		System.out.println("Turno: " +partida.getTurno());
 		System.out.println("Esperando jogador: " +partida.getJogadorAtual());
