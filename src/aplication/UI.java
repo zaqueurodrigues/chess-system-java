@@ -34,12 +34,12 @@ public class UI {
 	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
-	
+
 	// https://stackoverflow.com/questions/2979383/java-clear-the-console
 	public static void limpaTela() {
 	 System.out.print("\033[H\033[2J");
 	 System.out.flush();
-	} 
+	}
 
 	public static XadrezPosicao lerXadrezPosicao(Scanner sc) {
 		try {
@@ -52,7 +52,7 @@ public class UI {
 			throw new InputMismatchException("Erro ao fazer leitura. Valores validos de a1 a h8");
 		}
 	}
-	
+
 	public static void mostrarPecasCapturadas(List<PecaXadrez> capturadas) {
 		List<PecaXadrez> branca = capturadas.stream().filter(x -> x.getCor() == Cor.BRANCO).collect(Collectors.toList());
 	    List<PecaXadrez> preta = capturadas.stream().filter(x -> x.getCor() == Cor.PRETO).collect(Collectors.toList());
@@ -64,8 +64,8 @@ public class UI {
 	    System.out.print("Preta :");
 	    System.out.print(ANSI_YELLOW);
 	    System.out.print(Arrays.toString(preta.toArray()));
-	    System.out.println(ANSI_RESET);	
-	
+	    System.out.println(ANSI_RESET);
+
 	}
 	public static void mostrarPartida(PartidaXadrez partida, List<PecaXadrez> capturadas) {
 		mostrarTabuleiro(partida.getPecas());
@@ -73,12 +73,18 @@ public class UI {
 		mostrarPecasCapturadas(capturadas);
 		System.out.println();
 		System.out.println("Turno: " +partida.getTurno());
-		System.out.println("Esperando jogador: " +partida.getJogadorAtual());
-		if(partida.getXeque()) {
-			System.out.println("CHEQUE!");
+		if(!partida.getXequeMate()){
+			System.out.println("Esperando jogador: " +partida.getJogadorAtual());
+		        if(partida.getXeque()) {
+				System.out.println("XEQUE!");
 		}
-	}
-	
+                }
+		else {
+			System.out.println("XEQUEMATE!");
+			System.out.println("GANHADOR: " + partida.getJogadorAtual());
+		}
+        }
+
 	public static void mostrarTabuleiro(PecaXadrez[][] pecas) {
 		for (int i = 0; i < pecas.length; i++) {
 			System.out.print((8 - i) + " ");
@@ -90,7 +96,7 @@ public class UI {
 
 		System.out.println("  a b c d e f g h");
 	}
-	
+
 	public static void mostrarTabuleiro(PecaXadrez[][] pecas, boolean[][] possiveisMovimentos) {
 		for (int i = 0; i < pecas.length; i++) {
 			System.out.print((8 - i) + " ");
@@ -106,8 +112,8 @@ public class UI {
 	private static void mostrarPeca(PecaXadrez peca, boolean background) {
 		if(background) {
 			System.out.print(ANSI_BLUE_BACKGROUND);
-		} 
-		
+		}
+
 		if (peca == null) {
 			System.out.print("- " + ANSI_RESET);
 		} else {
